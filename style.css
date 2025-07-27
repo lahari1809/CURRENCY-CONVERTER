@@ -1,0 +1,407 @@
+body {
+    font-family: 'Inter', sans-serif; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    color: #eee;
+    overflow: hidden; 
+}
+
+/* --- App Branding/Title Style --- */
+.app-brand {
+    position: absolute; 
+    z-index: 1000;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    color: #ffc107; 
+    text-shadow: 0 0 15px rgba(255, 193, 7, 0.7); /* Stronger glow effect */
+    letter-spacing: 1px; /* Slightly spaced letters */
+    animation: centerToTopLeft 2.0s ease-out forwards;
+}
+
+.app-brand .icon {
+    font-size: 2.2rem; /* Larger icon size */
+    margin-right: 10px; /* Space between icon and text */
+    display: inline-block; /* Allows transformation */
+    animation: pulseGlow 2s infinite ease-in-out; /* Subtle pulsing glow for the icon */
+    transform-origin: center; 
+}
+
+/* --- Tagline Style --- */
+.app-brand .tagline {
+    font-size: 0.9rem; /* Smaller font for tagline */
+    font-weight: 500; /* Medium weight */
+    color: rgba(255, 255, 255, 0.7); /* Lighter color for subtlety */
+    margin-top: 5px; /* Space between title and tagline */
+    text-shadow: none; /* No shadow for tagline */
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s ease-out 1.8s forwards;
+}
+
+/* --- Keyframes --- */
+@keyframes centerToTopLeft {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5); /* Start small, centered */
+        position: fixed; /* Fix to viewport for true center */
+        top: 50%;
+        left: 50%;
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1); /* Pop to slightly larger */
+        position: fixed; /* Still fixed/centered */
+        top: 50%;
+        left: 50%;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(1); /* Settle to normal size */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1); /* Move to final absolute position */
+        position: absolute;
+        top: 25px; /* Final top position */
+        left: 30px; /* Final left position */
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.4));
+    }
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.8));
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* --- Main Content Wrapper Layout --- */
+.main-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1000px;
+    width: 100%;
+    opacity: 0; /* Start invisible */
+    transform: translateY(20px); /* Start slightly below */
+    animation: fadeInUp 1.0s ease-out 2.2s forwards; /* Fade in and slide up AFTER title animation */
+}
+
+/* Container for the main application content */
+.container {
+    background-color: rgba(44, 44, 44, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 30px;
+    width: 90%;
+    max-width: 480px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+/* Optional: Slight lift effect on container hover */
+.container:hover {
+    transform: translateY(-5px);
+}
+
+/* Heading style */
+h1 {
+    color: #eee;
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Style for the amount input field */
+.input-amount {
+    background-color: rgba(68, 68, 68, 0.8);
+    color: #eee;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 18px;
+    border-radius: 12px;
+    width: 100%;
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+    text-align: center;
+    outline: none;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.input-amount:focus {
+    box-shadow: 0 0 0 3px #ffc107, inset 0 3px 8px rgba(0, 0, 0, 0.3);
+    background-color: rgba(68, 68, 68, 0.95);
+}
+
+/* --- Remove Number Input Spinners --- */
+.input-amount::-webkit-outer-spin-button,
+.input-amount::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-amount[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Wrapper for 'from'/'to' currency selectors and swap button */
+.currency-select-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+/* Individual currency select box styling */
+.currency-select {
+    display: flex;
+    align-items: center;
+    background-color: rgba(68, 68, 68, 0.8);
+    color: #eee;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.currency-select:hover {
+    background-color: rgba(68, 68, 68, 0.95);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+/* Responsive adjustment for main-content-wrapper */
+@media (max-width: 800px) {
+    .main-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Hide default select arrow and add custom one */
+.currency-select::after {
+    content: '\\25BE';
+    position: absolute;
+    right: 15px;
+    color: #ddd;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.currency-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    color: #eee;
+    border: none;
+    padding: 0;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    position: relative;
+    z-index: 10;
+    background-color: #383838;
+    color: #eee;
+}
+
+/* Styles for individual options within the select dropdown list */
+.currency-select select option {
+    background-color: #383838;
+    color: #eee;
+    padding: 10px 15px;
+}
+
+/* Style for flag images within currency select */
+.currency-select img {
+    width: 30px;
+    height: 20px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the swap button */
+.swap-button {
+    background-color: #ffc107;
+    color: #222;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.swap-button:hover {
+    background-color: #e0a800;
+    transform: rotate(180deg) translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Style for the conversion result text (now unused in HTML) */
+.conversion-result {
+    color: #eee;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+/* Style for the converted amount span (now unused in HTML) */
+#convertedAmount {
+    font-weight: bold;
+    color: #ffc107;
+    font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+    transition: font-size 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* Style for the main convert button */
+.convert-button {
+    background-color: #ffc107;
+    color: #222;
+    border: none;
+    padding: 18px 35px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.convert-button:hover {
+    background-color: #e0a800;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.convert-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Optional: Style for scrollbar in select (for better aesthetics in some browsers) */
+.currency-select select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.currency-select select::-webkit-scrollbar-track {
+    background: #333;
+    border-radius: 10px;
+}
+
+.currency-select select::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+
+.currency-select select::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* --- Converted Symbol Display Frame Style --- */
+.converted-symbol-display {
+    background-color: rgba(44, 44, 44, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 180px;
+    min-height: 180px;
+    color: #eee;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.converted-symbol-display.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.converted-symbol-display .symbol {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ffc107;
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+    margin-bottom: 5px; /* Adjusted margin for country name */
+}
+
+/* NEW: Style for Country Name in Display Frame */
+.converted-symbol-display .country-name {
+    font-size: 1.1rem; /* Smaller than symbol, larger than value */
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8); /* Slightly muted */
+    margin-bottom: 10px; /* Space between country name and value */
+    text-align: center;
+}
+
+.converted-symbol-display .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #eee;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}

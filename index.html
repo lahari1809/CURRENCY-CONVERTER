@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-brand">
+        <span class="icon">💸</span>Conversion
+        <p class="tagline">Real-time converts. Global Access.</p> </div>
+
+        
+
+    <div class="main-content-wrapper">
+        <div class="container">
+            <h1>Currency converter</h1>
+
+            <div class="input-section">
+                <input type="number" id="amount" class="input-amount" value="100" min="0">
+            </div>
+
+            <div class="currency-select-wrapper">
+                <div class="currency-select">
+                    <img id="fromFlag" src="https://flagcdn.com/w20/us.png" alt="From Flag">
+                    <select id="fromCurrency"></select>
+                </div>
+
+                <button id="swapBtn" class="swap-button">&#x21C6;</button> <div class="currency-select">
+                    <img id="toFlag" src="https://flagcdn.com/w20/in.png" alt="To Flag">
+                    <select id="toCurrency"></select>
+                </div>
+            </div>
+
+            <div class="conversion-result">
+                Converted Amount: <span id="convertedAmount">0.00</span>
+            </div>
+
+            <button id="convertBtn" class="convert-button">Convert</button>
+        </div>
+
+        <div class="converted-symbol-display" id="convertedSymbolDisplay">
+            <span id="convertedSymbol" class="symbol">?</span>
+            <span id="convertedCountryName" class="country-name"></span> <span id="convertedValue" class="value">0.00</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
